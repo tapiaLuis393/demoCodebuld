@@ -5,16 +5,17 @@ phases:
     runtime-versions:
       java: corretto17
     commands:
-      - echo "Instalando dependencias..."
-      - curl https://intoli.com/install-google-chrome.sh | bash || echo "Instalación de Chrome falló"
+      - echo "Instalando Google Chrome..."
+      - curl https://intoli.com/install-google-chrome.sh | bash || echo "Fallo al instalar Chrome"
       - google-chrome --version || which google-chrome
-      - echo "Descargando ChromeDriver..."
-      - CHROMEDRIVER_URL=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | grep -o 'https.*chromedriver-linux64.zip' | head -1)
-      - echo "URL: $CHROMEDRIVER_URL"
-      - curl -Lo chromedriver.zip "$CHROMEDRIVER_URL"
-      - unzip chromedriver.zip
-      - mv chromedriver-linux64/chromedriver /usr/local/bin/
-      - chmod +x /usr/local/bin/chromedriver
+      - |
+        echo "Descargando ChromeDriver..."
+        CHROMEDRIVER_URL=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | grep -o 'https.*chromedriver-linux64.zip' | head -1)
+        echo "URL: $CHROMEDRIVER_URL"
+        curl -Lo chromedriver.zip "$CHROMEDRIVER_URL"
+        unzip chromedriver.zip
+        mv chromedriver-linux64/chromedriver /usr/local/bin/
+        chmod +x /usr/local/bin/chromedriver
 
   pre_build:
     commands:
@@ -23,7 +24,7 @@ phases:
 
   build:
     commands:
-      - echo "Ejecutando pruebas con Maven..."
+      - echo "Ejecutando pruebas..."
       - mvn test
 
 artifacts:
