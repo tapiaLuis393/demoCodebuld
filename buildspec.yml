@@ -8,6 +8,7 @@ phases:
       - echo "Instalando Google Chrome..."
       - curl https://intoli.com/install-google-chrome.sh | bash || echo "Fallo al instalar Chrome"
       - google-chrome --version || which google-chrome
+      - chmod +x ./setup-chromedriver.sh
       - ./setup-chromedriver.sh
 
   pre_build:
