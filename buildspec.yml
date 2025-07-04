@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto21
+      java: corretto17
     commands:
       - apt update
       - apt install -y wget unzip curl gnupg2 software-properties-common
