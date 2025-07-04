@@ -2,9 +2,11 @@
 set -e
 
 echo "Obteniendo URL de ChromeDriver..."
-curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json > versions.json
 
-CHROMEDRIVER_URL=$(grep -o 'https.*chromedriver-linux64.zip' versions.json | head -1)
+curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json -o versions.json
+
+# Extraemos la URL usando jq filtrando solo chromedriver-linux64.zip
+CHROMEDRIVER_URL=$(jq -r '.channels.stable.downloads.chromedriver[] | select(.platform=="linux64") | .url' versions.json)
 
 if [ -z "$CHROMEDRIVER_URL" ]; then
   echo "❌ No se pudo obtener la URL de ChromeDriver"
